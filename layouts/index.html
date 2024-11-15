@@ -1,0 +1,68 @@
+{{ define "main" }}
+{{ .Content }}
+
+<h2>Blog</h2>
+
+<div id="list-page">
+  {{ $pages := .Site.RegularPages }}
+  {{ $paginator := .Paginate ($pages) }}
+  <ul class="blog-posts">
+  {{ range $paginator.Pages }}
+      {{ $title := .Title }}
+      {{ $summary := .Summary }}
+      <li>
+        <span>
+          <i>
+            <time datetime='{{ .Date.Format "2006-01-02" }}' pubdate>
+              {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
+            </time>
+          </i>
+        </span>
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </li>
+  {{ end }}
+  </ul>
+
+  {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
+      <div class="pagination">
+        {{ if $paginator.HasPrev }}
+            <span class="prev">
+                <a href="{{.Paginator.Prev.URL}}">
+                    <span class="arrow">←</span> {{ with .Site.Params.newerPosts }}{{ . }}{{ else }}{{ i18n "postsNewer" }}{{ end }}
+                </a>
+          </span>
+        {{ end }}
+        
+        {{ if $paginator.HasNext }}
+            <span class="next">
+                <a href="{{.Paginator.Next.URL}}">
+                    {{ with .Site.Params.olderPosts }}{{ . }}{{ else }}{{ i18n "postsOlder" }}{{ end }} <span class="arrow">→</span>
+                </a>
+            </span>
+        {{ end }}
+      </div>
+  {{ end }}
+
+</div>
+
+<h2>Projects</h2>
+
+<ul class="projects">  
+  <li>
+    <a href="https://github.com/fouronnes/torchlensmaker">torchlensmaker</a>
+    <i>A python library to design optical systems with optimization</i>
+  </li>
+  
+  <li>
+    <a href="https://fouronnes.github.io/cppiceberg/">The C++ Iceberg</a>
+    <i>A silly meme about C++</i>
+  </li>
+
+  <li>
+    <a href="https://depuis1958.fr">depuis1958.fr</a>
+    <i>[FR] Un modèle prédictif de l'élection présidentielle française</i>
+  </li>
+
+</ul>
+
+{{ end }}

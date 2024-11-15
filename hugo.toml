@@ -1,0 +1,4 @@
+baseURL = 'https://fouronnes.github.io/'
+languageCode = 'en-us'
+title = 'Victor Poughon · Blog'
+theme = 'hugo-bearblog'
